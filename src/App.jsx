@@ -15,7 +15,7 @@ function App() {
     <>
     <div>
       <h1>LOA 패키지 계산기</h1>
-      <p>골드 시세는 필수 입력해야합니다</p>
+      <p>골드 시세는 필수로 입력해야합니다</p>
 
       <div className='cash_box'>
 
