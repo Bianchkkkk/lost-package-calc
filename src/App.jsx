@@ -18,7 +18,7 @@ function App() {
       <div className='cash_box'>
 
         <div>
-          <img src="/coupon.png" alt="coupon" />
+          <img src="/lost-package-calc/coupon.png" alt="coupon" />
           <p className='title'>상품권 할인율</p>
           <div>
             <input type="number" onChange={
@@ -29,7 +29,7 @@ function App() {
           </div>
         </div>
         <div>
-          <img src="/gold.png" alt="gold" />
+          <img src="/lost-package-calc/gold.png" alt="gold" />
           <p className='title'>골드 시세</p>
 
           <div className='gold_box'>
@@ -45,7 +45,7 @@ function App() {
 
         <div className='item_box'>
           <div>
-            <img src="/shardOfHonor.png" alt="shardOfHonor" />
+            <img src="/lost-package-calc/shardOfHonor.png" alt="shardOfHonor" />
             <p className='title'>명파(대)</p>
             <div>
               <input type="number" onChange={
@@ -56,7 +56,7 @@ function App() {
             </div>
           </div>   
           <div>
-            <img src="/topQualityOreha.png" alt="topQualityOreha" />
+            <img src="/lost-package-calc/topQualityOreha.png" alt="topQualityOreha" />
             <p className='title'>최상레하</p>
             <div>
               <input type="number" onChange={
@@ -67,7 +67,7 @@ function App() {
             </div>
           </div>
           <div>
-            <img src="/StoneOfHonor.png" alt="StoneOfHonor" />
+            <img src="/lost-package-calc/StoneOfHonor.png" alt="StoneOfHonor" />
             <p className='title'>찬명돌</p>
             <div>
               <input type="number" onChange={
@@ -78,7 +78,7 @@ function App() {
             </div>
           </div>
           <div>
-            <img src="/grace.png" alt="grace" />
+            <img src="/lost-package-calc/grace.png" alt="grace" />
             <p className='title'>은총</p>
             <div>
               <input type="number" onChange={
@@ -90,7 +90,7 @@ function App() {
             </div>
           </div>
           <div>
-            <img src="/blessing.png" alt="blessing" />
+            <img src="/lost-package-calc/blessing.png" alt="blessing" />
             <p className='title'>축복</p>
             <div>
               <input type="number" onChange={
@@ -103,7 +103,7 @@ function App() {
           </div>
 
           <div>
-            <img src="/protection.png" alt="protection" />
+            <img src="/lost-package-calc/protection.png" alt="protection" />
             <p className='title'>가호</p>
             <div>
               <input type="number" onChange={
@@ -116,7 +116,7 @@ function App() {
         </div> 
         <div className='result_box'>
           <div className='result_item'>
-            <img src="/week.png" alt="week" />
+            <img src="/lost-package-calc/week.png" alt="week" />
             <p className='title'>주간성장패키지</p>
             <p className='title'>현금가</p>
             <p className='text'>{22000*((100-cash)/100)}</p>
@@ -130,7 +130,7 @@ function App() {
             </div>
           </div>
           <div className='result_item'>
-            <img src="/sub.png" alt="sub" />
+            <img src="/lost-package-calc/sub.png" alt="sub" />
             <p className='title'>주간보조패키지</p>
             <p className='title'>현금가</p>
             <p className='text'>{33000*((100-cash)/100)}</p>
@@ -144,7 +144,7 @@ function App() {
             </div>
           </div>
           <div className='result_item'>
-            <img src="/pcRoom.png" alt="pcRoom" />
+            <img src="/lost-package-calc/pcRoom.png" alt="pcRoom" />
             <p className='title'>PC방 패키지</p>
             <p className='title'>현금가</p>
             <p className='text'>{33000*((100-cash)/100)}</p>
