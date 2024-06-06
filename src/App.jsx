@@ -19,6 +19,8 @@ function App() {
     ReactGA.set({ page: pathName }); //현재 사용자 페이지 
     ReactGA.pageview(pathName); //페이지뷰 기록
 
+
+
   }, [])
   return (
     <>
@@ -34,6 +36,17 @@ function App() {
           <div>
             <input type="number" onChange={
               (e) => {
+                if (e.target.value >= 0) {
+                  if (e.target.value.length > 2) {
+                    if (e.target.value > 100) {
+                      alert("최대 99까지 입력가능합니다");
+                    }
+                    e.target.value = e.target.value.slice(0, 2);
+                  }
+                } else {
+                  e.target.value = 0;
+                  alert("음수값을 입력할 수 없습니다.");
+                }
                 setCash(e.target.value)
               }
             }/>
@@ -47,6 +60,17 @@ function App() {
             <p>100 : </p>
             <input type="number" onChange={
               (e) => {
+                if (e.target.value >= 0) {
+                  if (e.target.value.length > 2) {
+                    if (e.target.value > 100) {
+                      alert("최대 99까지 입력가능합니다");
+                    }
+                    e.target.value = e.target.value.slice(0, 2);
+                  }
+                } else {
+                  e.target.value = 0;
+                  alert("음수값을 입력할 수 없습니다.");
+                }
                 setGold(e.target.value)
               }
             } />
@@ -61,6 +85,10 @@ function App() {
             <div>
               <input type="number" onChange={
                 (e) => {
+                  if (e.target.value < 0) {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
+                  }
                   setShardOfHonor(e.target.value)
                 }
               } />
@@ -72,6 +100,10 @@ function App() {
             <div>
               <input type="number" onChange={
                 (e) => {
+                  if (e.target.value < 0) {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
+                  }
                   setTopQualityOreha(e.target.value)
                 }
               } />
@@ -83,6 +115,10 @@ function App() {
             <div>
               <input type="number" onChange={
                 (e) => {
+                  if (e.target.value < 0) {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
+                  }
                   setStoneOfHonor(e.target.value)
                 }
               } />
@@ -94,6 +130,10 @@ function App() {
             <div>
               <input type="number" onChange={
                 (e) => {
+                  if (e.target.value < 0) {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
+                  }
                   setGrace(e.target.value)
                 }
               
@@ -106,6 +146,10 @@ function App() {
             <div>
               <input type="number" onChange={
                 (e) => {
+                  if (e.target.value < 0) {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
+                  }
                   setBlessing(e.target.value)
                 }
               } />
@@ -119,6 +163,10 @@ function App() {
             <div>
               <input type="number" onChange={
                 (e) => {
+                  if (e.target.value < 0) {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
+                  }
                   setProtection(e.target.value)
                 }
               } />
