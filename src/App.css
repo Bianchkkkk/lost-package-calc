@@ -88,8 +88,12 @@ button:hover {
   margin: 20px 0;
   width: 20%;
   transition: background-color 0.3s ease;
-
 }
+
+.selectable {
+  cursor: pointer;
+}
+
 .result_item {
   background-color: #444;
   padding: 20px;

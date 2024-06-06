@@ -1,13 +1,13 @@
-
-
-
 import { useState, useEffect } from 'react';
 import './App.css';
 import ReactGA from 'react-ga';
 
 function App() {
   const [cash, setCash] = useState(0);
+  const [selectedGold, setSelectedGold] = useState(0);
   const [gold, setGold] = useState(0);
+  const [poGold, setPoGold] = useState(0);
+  const [deGold, setDeGold] = useState(0);
   const [items, setItems] = useState([
     { id: 66130133, name: 'shardOfHonor', korName: '명파', value: 0 },
     { id: 6861011, name: 'topQualityOreha', korName: '최상레', value: 0 },
@@ -18,6 +18,15 @@ function App() {
   ]);
   const [api_key, setApi_key] = useState(localStorage.getItem('api_key'));
   const pathName = window.location.pathname;
+
+  useEffect(() => {
+    if (selectedGold === 0) {
+      setGold((2750*(100-cash)/100)/poGold);
+    } else {
+      setGold(deGold/100);
+    }
+  }
+  ,[selectedGold, deGold, poGold]);
 
   useEffect(() => {
     ReactGA.initialize(import.meta.env.VITE_GOOGLE_ANALYTICS_ID, { debug: true });
@@ -108,10 +117,36 @@ function App() {
               }/>
             </div>
           </div>
-          <div className='cash_item'>
+          <div className='cash_item selectable' onClick={
+            () => {
+              setSelectedGold(0);
+            }
+          }            
+          style={selectedGold === 0 ? {boxShadow: '0 0 0 3px #1f65b4', transition: '0.5s ease' } : {}}
+          >
             <img src="/lost-package-calc/gold.png" alt="gold" />
-            <p className='title'>골드 시세</p>
-
+            <p className='title'>양지 골드 시세</p>
+            <div className='gold_box'>
+              <p>2750 : </p>
+              <input type="number" onChange={
+                (e) => {
+                  if (e.target.value < 0) {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
+                  }
+                  setPoGold(e.target.value)
+                }
+              } />
+            </div>
+          </div> 
+          <div className='cash_item selectable' onClick={
+            () => {
+              setSelectedGold(1);
+            }
+          }                      
+          style={selectedGold === 1 ? {boxShadow: '0 0 0 3px #1f65b4', transition: '0.5s ease' } : {}}
+          >            <img src="/lost-package-calc/gold.png" alt="gold" />
+            <p className='title'>음지 골드 시세</p>
             <div className='gold_box'>
               <p>100 : </p>
               <input type="number" onChange={
@@ -127,7 +162,7 @@ function App() {
                     e.target.value = 0;
                     alert("음수값을 입력할 수 없습니다.");
                   }
-                  setGold(e.target.value)
+                  setDeGold(e.target.value)
                 }
               } />
             </div>
@@ -157,7 +192,7 @@ function App() {
             <div>
               <p>이득률</p>
               <p>{(gold && items[0].value && items[1].value && items[2].value)?
-              ((((items[0].value*60+items[1].value*500+items[2].value*300)*(gold/100))/(22000*((100-cash)/100))*100)-100).toFixed(2)+'%'
+              ((((items[0].value*60+items[1].value*500+items[2].value*300)*(gold))/(22000*((100-cash)/100))*100)-100).toFixed(2)+'%'
             :0}</p>
             </div>
           </div>
@@ -173,7 +208,7 @@ function App() {
             <div>
               <p>이득률</p>
               <p>{(gold && items[5].value&items[4].value&items[3].value)?
-              ((((items[5].value*100+items[4].value*300+items[3].value*500)*(gold/100))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%':0}</p>
+              ((((items[5].value*100+items[4].value*300+items[3].value*500)*(gold))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%':0}</p>
             </div>
           </div>
           <div className='result_item'>
@@ -188,7 +223,7 @@ function App() {
             <div>
               <p>이득률</p>
               <p>{(gold && items[0].value && items[1].value && items[2].value)?
-              ((((items[0].value*200+items[1].value*250+items[2].value*600)*(gold/100))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%'
+              ((((items[0].value*200+items[1].value*250+items[2].value*600)*(gold))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%'
               :0}</p>
             </div>
           </div>
