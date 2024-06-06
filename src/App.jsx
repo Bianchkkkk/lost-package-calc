@@ -32,7 +32,7 @@ function App() {
 
         <div>
           <img src="/lost-package-calc/coupon.png" alt="coupon" />
-          <p className='title'>상품권 할인율</p>
+          <p className='title'>상품권 할인율 (%)</p>
           <div>
             <input type="number" onChange={
               (e) => {
@@ -81,7 +81,7 @@ function App() {
         <div className='item_box'>
           <div>
             <img src="/lost-package-calc/shardOfHonor.png" alt="shardOfHonor" />
-            <p className='title'>명파(대)</p>
+            <p className='title'>명파(대)(골드)</p>
             <div>
               <input type="number" onChange={
                 (e) => {
@@ -96,7 +96,7 @@ function App() {
           </div>   
           <div>
             <img src="/lost-package-calc/topQualityOreha.png" alt="topQualityOreha" />
-            <p className='title'>최상레하</p>
+            <p className='title'>최상레하(골드)</p>
             <div>
               <input type="number" onChange={
                 (e) => {
@@ -111,7 +111,7 @@ function App() {
           </div>
           <div>
             <img src="/lost-package-calc/StoneOfHonor.png" alt="StoneOfHonor" />
-            <p className='title'>찬명돌</p>
+            <p className='title'>찬명돌(골드)</p>
             <div>
               <input type="number" onChange={
                 (e) => {
@@ -126,7 +126,7 @@ function App() {
           </div>
           <div>
             <img src="/lost-package-calc/grace.png" alt="grace" />
-            <p className='title'>은총</p>
+            <p className='title'>은총(골드)</p>
             <div>
               <input type="number" onChange={
                 (e) => {
@@ -142,7 +142,7 @@ function App() {
           </div>
           <div>
             <img src="/lost-package-calc/blessing.png" alt="blessing" />
-            <p className='title'>축복</p>
+            <p className='title'>축복(골드)</p>
             <div>
               <input type="number" onChange={
                 (e) => {
@@ -159,7 +159,7 @@ function App() {
 
           <div>
             <img src="/lost-package-calc/protection.png" alt="protection" />
-            <p className='title'>가호</p>
+            <p className='title'>가호(골드)</p>
             <div>
               <input type="number" onChange={
                 (e) => {
