@@ -1,5 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
+
+import ReactGA from 'react-ga'
+
 
 function App() {
   const [cash, setCash] = useState(0)
@@ -10,7 +13,13 @@ function App() {
   const [grace, setGrace] = useState(0)
   const [blessing, setBlessing] = useState(0)
   const [protection, setProtection] = useState(0)
+  const pathName = window.location.pathname
+  useEffect(() => {
+    ReactGA.initialize(import.meta.env.VITE_GOOGLE_ANALYTICS_ID, { debug: true })
+    ReactGA.set({ page: pathName }); //현재 사용자 페이지 
+    ReactGA.pageview(pathName); //페이지뷰 기록
 
+  }, [])
   return (
     <>
     <div>
