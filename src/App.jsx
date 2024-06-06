@@ -15,6 +15,8 @@ function App() {
     <>
     <div>
       <h1>LOA 패키지 계산기</h1>
+      <p>골드 시세는 필수 입력해야합니다</p>
+
       <div className='cash_box'>
 
         <div>
@@ -33,7 +35,7 @@ function App() {
           <p className='title'>골드 시세</p>
 
           <div className='gold_box'>
-            <p>100:</p>
+            <p>100 : </p>
             <input type="number" onChange={
               (e) => {
                 setGold(e.target.value)
@@ -126,7 +128,9 @@ function App() {
             </div>
             <div>
               <p>이득률</p>
-              <p>{(((shardOfHonor*60+topQualityOreha*500+StoneOfHonor*300)*(gold/100))/(22000*((100-cash)/100))*100)}</p>
+              <p>{(gold && shardOfHonor && topQualityOreha && StoneOfHonor)?
+              ((((shardOfHonor*60+topQualityOreha*500+StoneOfHonor*300)*(gold/100))/(22000*((100-cash)/100))*100)-100)
+            :0}</p>
             </div>
           </div>
           <div className='result_item'>
@@ -140,7 +144,8 @@ function App() {
             </div>
             <div>
               <p>이득률</p>
-              <p>{(((protection*100+blessing*300+grace*500)*(gold/100))/(33000*((100-cash)/100))*100)}</p>
+              <p>{(gold && protection&blessing&grace)?
+              (((protection*100+blessing*300+grace*500)*(gold/100))/(33000*((100-cash)/100))*100)-100:0}</p>
             </div>
           </div>
           <div className='result_item'>
@@ -154,7 +159,9 @@ function App() {
             </div>
             <div>
               <p>이득률</p>
-              <p>{(((shardOfHonor*200+topQualityOreha*250+StoneOfHonor*600)*(gold/100))/(33000*((100-cash)/100))*100)}</p>
+              <p>{(gold && shardOfHonor && topQualityOreha && StoneOfHonor)?
+              ((((shardOfHonor*200+topQualityOreha*250+StoneOfHonor*600)*(gold/100))/(33000*((100-cash)/100))*100)-100)
+              :0}</p>
             </div>
           </div>
         </div>
