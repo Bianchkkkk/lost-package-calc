@@ -186,7 +186,7 @@ function App() {
             <div>
               <p>이득률</p>
               <p>{(gold && shardOfHonor && topQualityOreha && StoneOfHonor)?
-              ((((shardOfHonor*60+topQualityOreha*500+StoneOfHonor*300)*(gold/100))/(22000*((100-cash)/100))*100)-100)
+              ((((shardOfHonor*60+topQualityOreha*500+StoneOfHonor*300)*(gold/100))/(22000*((100-cash)/100))*100)-100).toFixed(2)+'%'
             :0}</p>
             </div>
           </div>
@@ -202,7 +202,7 @@ function App() {
             <div>
               <p>이득률</p>
               <p>{(gold && protection&blessing&grace)?
-              (((protection*100+blessing*300+grace*500)*(gold/100))/(33000*((100-cash)/100))*100)-100:0}</p>
+              ((((protection*100+blessing*300+grace*500)*(gold/100))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%':0}</p>
             </div>
           </div>
           <div className='result_item'>
@@ -217,7 +217,7 @@ function App() {
             <div>
               <p>이득률</p>
               <p>{(gold && shardOfHonor && topQualityOreha && StoneOfHonor)?
-              ((((shardOfHonor*200+topQualityOreha*250+StoneOfHonor*600)*(gold/100))/(33000*((100-cash)/100))*100)-100)
+              ((((shardOfHonor*200+topQualityOreha*250+StoneOfHonor*600)*(gold/100))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%'
               :0}</p>
             </div>
           </div>
