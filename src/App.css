@@ -36,7 +36,7 @@ input[type="number"] {
 
 input[type="text"]:hover,
 input[type="number"]:hover {
-  background-color: #555;
+  background-color: #292929;
 }
 
 button {
@@ -60,10 +60,10 @@ button:hover {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin: 60px 0;
+  margin: 60px 60px;
   border:#666 solid 1px;
   border-radius: 10px;
-  padding: 20px;
+  padding: 0 20px;
 }
 
 .gold_box {
@@ -72,16 +72,35 @@ button:hover {
   align-items: center;
   flex-wrap: wrap;
 }
+.item_item {
+  background-color: #444;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  width: 10%;
+  transition: background-color 0.3s ease;
+}
 
+.cash_item {
+  background-color: #444;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  width: 20%;
+  transition: background-color 0.3s ease;
+
+}
 .result_item {
   background-color: #444;
   padding: 20px;
   border-radius: 10px;
-  margin-bottom: 20px;
-  width: 30%;
+  margin: 20px 0;
+  width: 20%;
   transition: background-color 0.3s ease;
 }
 
+.item_item:hover,
+.cash_item:hover,
 .result_item:hover {
   background-color: #555;
 }

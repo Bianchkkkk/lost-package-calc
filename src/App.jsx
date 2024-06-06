@@ -86,56 +86,56 @@ function App() {
           <button onClick={handleApiKeyUpdate}>가격 한번에 불러오기</button>
         </div>
         <div className='cash_box'>
-        <div>
-          <img src="/lost-package-calc/coupon.png" alt="coupon" />
-          <p className='title'>상품권 할인율 (%)</p>
-          <div>
-            <input type="number" onChange={
-              (e) => {
-                if (e.target.value >= 0) {
-                  if (e.target.value.length > 2) {
-                    if (e.target.value > 100) {
-                      alert("최대 99까지 입력가능합니다");
+          <div className='cash_item'>
+            <img src="/lost-package-calc/coupon.png" alt="coupon" />
+            <p className='title'>상품권 할인율 (%)</p>
+            <div>
+              <input type="number" onChange={
+                (e) => {
+                  if (e.target.value >= 0) {
+                    if (e.target.value.length > 2) {
+                      if (e.target.value > 100) {
+                        alert("최대 99까지 입력가능합니다");
+                      }
+                      e.target.value = e.target.value.slice(0, 2);
                     }
-                    e.target.value = e.target.value.slice(0, 2);
+                  } else {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
                   }
-                } else {
-                  e.target.value = 0;
-                  alert("음수값을 입력할 수 없습니다.");
+                  setCash(e.target.value)
                 }
-                setCash(e.target.value)
-              }
-            }/>
+              }/>
+            </div>
           </div>
-        </div>
-        <div>
-          <img src="/lost-package-calc/gold.png" alt="gold" />
-          <p className='title'>골드 시세</p>
+          <div className='cash_item'>
+            <img src="/lost-package-calc/gold.png" alt="gold" />
+            <p className='title'>골드 시세</p>
 
-          <div className='gold_box'>
-            <p>100 : </p>
-            <input type="number" onChange={
-              (e) => {
-                if (e.target.value >= 0) {
-                  if (e.target.value.length > 2) {
-                    if (e.target.value > 100) {
-                      alert("최대 99까지 입력가능합니다");
+            <div className='gold_box'>
+              <p>100 : </p>
+              <input type="number" onChange={
+                (e) => {
+                  if (e.target.value >= 0) {
+                    if (e.target.value.length > 2) {
+                      if (e.target.value > 100) {
+                        alert("최대 99까지 입력가능합니다");
+                      }
+                      e.target.value = e.target.value.slice(0, 2);
                     }
-                    e.target.value = e.target.value.slice(0, 2);
+                  } else {
+                    e.target.value = 0;
+                    alert("음수값을 입력할 수 없습니다.");
                   }
-                } else {
-                  e.target.value = 0;
-                  alert("음수값을 입력할 수 없습니다.");
+                  setGold(e.target.value)
                 }
-                setGold(e.target.value)
-              }
-            } />
-          </div>
-        </div> 
+              } />
+            </div>
+          </div> 
         </div>
         <div className='item_box'>
           {items.map(item => (
-            <div key={item.id}>
+            <div className='item_item' key={item.id}>
               <img src={`/lost-package-calc/${item.name}.png`} alt={item.name} />
               <p className='title'>{item.korName}</p>
               <div>
