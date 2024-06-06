@@ -18,7 +18,7 @@ function App() {
     ReactGA.initialize(import.meta.env.VITE_GOOGLE_ANALYTICS_ID, { debug: true })
     ReactGA.set({ page: pathName }); //현재 사용자 페이지 
     ReactGA.pageview(pathName); //페이지뷰 기록
-
+ 
 
 
   }, [])
