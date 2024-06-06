@@ -9,7 +9,7 @@ function App() {
   const [poGold, setPoGold] = useState(0);
   const [deGold, setDeGold] = useState(0);
   const [items, setItems] = useState([
-    { id: 66130133, name: 'shardOfHonor', korName: '명파', value: 0 },
+    { id: 66130133, name: 'shardOfHonor', korName: '명파(대)', value: 0 },
     { id: 6861011, name: 'topQualityOreha', korName: '최상레', value: 0 },
     { id: 66110224, name: 'StoneOfHonor',korName: '찬명돌', value: 0 },
     { id: 66111121, name: 'grace', korName: '은총', value: 0 },
