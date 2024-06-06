@@ -1,148 +1,91 @@
-import { useState, useEffect } from 'react'
-import './App.css'
 
-import ReactGA from 'react-ga'
 
+
+import { useState, useEffect } from 'react';
+import './App.css';
+import ReactGA from 'react-ga';
 
 function App() {
-  const [cash, setCash] = useState(0)
-  const [gold, setGold] = useState(0)
-  const [shardOfHonor, setShardOfHonor] = useState({
-    id : 66130133,
-    value : 0
-  })
-  const [topQualityOreha, setTopQualityOreha] = useState({
-    id : 6861011,
-    value : 0
-  })
-  const [StoneOfHonor, setStoneOfHonor] = useState({
-    id : 66110224,
-    value : 0
-  })
-  const [grace, setGrace] = useState({
-    id : 66111121,
-    value : 0
-  })
-  const [blessing, setBlessing] = useState({
-    id : 66111122,
-    value : 0
-  })
-  const [protection, setProtection] = useState({
-    id : 66111123,
-    value : 0
-  })
-  const [api_key, setApi_key] = useState(localStorage.getItem('api_key'))
-  const pathName = window.location.pathname
-
+  const [cash, setCash] = useState(0);
+  const [gold, setGold] = useState(0);
+  const [items, setItems] = useState([
+    { id: 66130133, name: 'shardOfHonor', korName: '명파', value: 0 },
+    { id: 6861011, name: 'topQualityOreha', korName: '최상레', value: 0 },
+    { id: 66110224, name: 'StoneOfHonor',korName: '찬명돌', value: 0 },
+    { id: 66111121, name: 'grace', korName: '은총', value: 0 },
+    { id: 66111122, name: 'blessing', korName: '축복', value: 0 },
+    { id: 66111123, name: 'protection', korName: '가호', value: 0 },
+  ]);
+  const [api_key, setApi_key] = useState(localStorage.getItem('api_key'));
+  const pathName = window.location.pathname;
 
   useEffect(() => {
-    ReactGA.initialize(import.meta.env.VITE_GOOGLE_ANALYTICS_ID, { debug: true })
-    ReactGA.set({ page: pathName }); //현재 사용자 페이지 
-    ReactGA.pageview(pathName); //페이지뷰 기록
+    ReactGA.initialize(import.meta.env.VITE_GOOGLE_ANALYTICS_ID, { debug: true });
+    ReactGA.set({ page: pathName });
+    ReactGA.pageview(pathName);
+  }, []);
 
-  }, [])
-
-
-  function getItemsValue() {
-    getItemValue('shardOfHonor', shardOfHonor.id)
-    getItemValue('topQualityOreha', topQualityOreha.id)
-    getItemValue('StoneOfHonor', StoneOfHonor.id)
-    getItemValue('grace', grace.id)
-    getItemValue('blessing', blessing.id)
-    getItemValue('protection', protection.id)
+  function updateItemValue(item, value) {
+    setItems(prevItems =>
+      prevItems.map(prevItem =>
+        prevItem.name === item.name ? { ...prevItem, value: value } : prevItem
+      )
+    );
   }
 
-  function getItemValue(item_name, item_id) {
-    fetch("https://developer-lostark.game.onstove.com/markets/items/"+item_id, {
+  function handleChange(e, item) {
+    let value = parseInt(e.target.value);
+    if (value < 0) {
+      value = 0;
+      alert('음수값을 입력할 수 없습니다.');
+    }
+    updateItemValue(item, value);
+  }
+
+
+  function fetchItemValue(item) {
+    fetch(`https://developer-lostark.game.onstove.com/markets/items/${item.id}`, {
       headers: {
-        Accept: "application/json",
-        Authorization: "bearer "+api_key,
-      }
+        Accept: 'application/json',
+        Authorization: `bearer ${api_key}`,
+      },
     })
-      .then((res) => res.json())
-      .then((data) => {
-        switch (item_name) {
-          case 'shardOfHonor':
-            setShardOfHonor(
-              {
-                id : item_id,
-                value : parseInt(data[0].Stats[0].AvgPrice)
-              }
-            )
-            break;
-          case 'topQualityOreha':
-            setTopQualityOreha(
-              {
-                id : item_id,
-                value : parseInt(data[0].Stats[0].AvgPrice)
-              }
-            )
-            break;
-          case 'StoneOfHonor':
-            setStoneOfHonor(
-              {
-                id : item_id,
-                value : parseInt(data[0].Stats[0].AvgPrice)
-              }
-            )
-            break;
-          case 'grace':
-            setGrace(
-              {
-                id : item_id,
-                value : parseInt(data[0].Stats[0].AvgPrice)
-              }
-            )
-            break;
-          case 'blessing':
-            setBlessing(
-              {
-                id : item_id,
-                value : parseInt(data[0].Stats[0].AvgPrice)
-              }
-            )
-            break;
-          case 'protection':
-            setProtection(
-              {
-                id : item_id,
-                value : parseInt(data[0].Stats[0].AvgPrice)
-              }
-            )
-            break;
-        }
-      }
-    )
+      .then(res => res.json())
+      .then(data => {
+        updateItemValue(item, parseInt(data[0].Stats[0].AvgPrice));
+      });
   }
+
+  function loadItemsValue() {
+    items.forEach(item => fetchItemValue(item));
+  }
+
+  function handleApiKeyUpdate() {
+    const apiKeyInput = document.querySelector('input');
+    if (!apiKeyInput.value) {
+      alert('api 키를 입력해주세요');
+      return;
+    }
+    localStorage.setItem('api_key', apiKeyInput.value);
+    setApi_key(apiKeyInput.value);
+    loadItemsValue();
+  }
+
   return (
     <>
-    <div>
-      <h1>로아 패키지 계산기</h1>
-      <p>골드 시세는 필수로 입력해야합니다</p>
-      <div className='api_input_box'>
-          <input type='text' 
-          placeholder= 'api 키'
-          defaultValue={(localStorage.getItem('api_key'))}
-          onChange={
-            (e) => {
-              setApi_key(e.target.value)
-            }
-          }/>
-          <button onClick={
-            () => {
-              if (document.querySelector('input').value === '') {
-                alert('api 키를 입력해주세요')
-                return
-              } else {
-                localStorage.setItem('api_key', document.querySelector('input').value)
-                setApi_key(document.querySelector('input').value)
-                getItemsValue()
-              }
-            }
-          }>가격 한번에 불러오기</button>
-
-      </div>
-      <div className='cash_box'>
+      <div>
+        <h1>로아 패키지 계산기</h1>
+        <p>골드 시세는 필수로 입력해야합니다</p>
+        <div className='api_input_box'>
+          <input
+            type='text'
+            placeholder='api 키'
+            defaultValue={api_key}
+            onChange={e => setApi_key(e.target.value)}
+          />
+          <button onClick={handleApiKeyUpdate}>가격 한번에 불러오기</button>
+        </div>
+        <div className='cash_box'>
         <div>
           <img src="/lost-package-calc/coupon.png" alt="coupon" />
           <p className='title'>상품권 할인율 (%)</p>
@@ -188,146 +131,19 @@ function App() {
               }
             } />
           </div>
-        </div>   
-      </div>
-
-        <div className='item_box'>
-          <div>
-            <img src="/lost-package-calc/shardOfHonor.png" alt="shardOfHonor" />
-            <p className='title'>명파(대)(골드)</p>
-            <div>
-              <input type="number" 
-              value={shardOfHonor.value}
-              onChange={
-                (e) => {
-                  if (e.target.value < 0) {
-                    e.target.value = 0;
-                    alert("음수값을 입력할 수 없습니다.");
-                  }
-                  setShardOfHonor(
-                    {
-                      id : 66130133,
-                      value : e.target.value
-                    }
-                  )
-                }
-              } />
-            </div>
-          </div>   
-          <div>
-            <img src="/lost-package-calc/topQualityOreha.png" alt="topQualityOreha" />
-            <p className='title'>최상레하(골드)</p>
-            <div>
-              <input type="number" 
-              value={topQualityOreha.value}
-              onChange={
-                (e) => {
-                  if (e.target.value < 0) {
-                    e.target.value = 0;
-                    alert("음수값을 입력할 수 없습니다.");
-                  }
-                  setTopQualityOreha(
-                    {
-                      id : 6861011,
-                      value : e.target.value
-                    }
-                  )
-                }
-              } />
-            </div>
-          </div>
-          <div>
-            <img src="/lost-package-calc/StoneOfHonor.png" alt="StoneOfHonor" />
-            <p className='title'>찬명돌(골드)</p>
-            <div>
-              <input type="number" 
-              value={StoneOfHonor.value}
-              onChange={
-                (e) => {
-                  if (e.target.value < 0) {
-                    e.target.value = 0;
-                    alert("음수값을 입력할 수 없습니다.");
-                  }
-                  setStoneOfHonor(
-                    {
-                      id : 66110224,
-                      value : e.target.value
-                    }
-                  )
-                }
-              } />
-            </div>
-          </div>
-          <div>
-            <img src="/lost-package-calc/grace.png" alt="grace" />
-            <p className='title'>은총(골드)</p>
-            <div>
-              <input type="number"
-              value={grace.value}
-              onChange={
-                (e) => {
-                  if (e.target.value < 0) {
-                    e.target.value = 0;
-                    alert("음수값을 입력할 수 없습니다.");
-                  }
-                  setGrace(
-                    {
-                      id : 66111121,
-                      value : e.target.value
-                    }
-                  )
-                }
-              
-              } />
-            </div>
-          </div>
-          <div>
-            <img src="/lost-package-calc/blessing.png" alt="blessing" />
-            <p className='title'>축복(골드)</p>
-            <div>
-              <input type="number" 
-              value={blessing.value}
-              onChange={
-                (e) => {
-                  if (e.target.value < 0) {
-                    e.target.value = 0;
-                    alert("음수값을 입력할 수 없습니다.");
-                  }
-                  setBlessing(
-                    {
-                      id : 66111122,
-                      value : e.target.value
-                    }
-                  )
-                }
-              } />
-              
-            </div>
-          </div>
-
-          <div>
-            <img src="/lost-package-calc/protection.png" alt="protection" />
-            <p className='title'>가호(골드)</p>
-            <div>
-              <input type="number" 
-              value={protection.value}
-              onChange={
-                (e) => {
-                  if (e.target.value < 0) {
-                    e.target.value = 0;
-                    alert("음수값을 입력할 수 없습니다.");
-                  }
-                  setProtection(
-                    {
-                      id : 66111123,
-                      value : e.target.value
-                    }
-                  )
-                }
-              } />
-            </div>
-          </div>
         </div> 
+        </div>
+        <div className='item_box'>
+          {items.map(item => (
+            <div key={item.id}>
+              <img src={`/lost-package-calc/${item.name}.png`} alt={item.name} />
+              <p className='title'>{item.korName}</p>
+              <div>
+                <input type='number' value={item.value} onChange={e => handleChange(e, item)} />
+              </div>
+            </div>
+          ))}
+        </div>
         <div className='result_box'>
           <div className='result_item'>
             <img src="/lost-package-calc/week.png" alt="week" />
@@ -336,12 +152,12 @@ function App() {
             <p className='text'>{22000*((100-cash)/100)}</p>
             <div>
               <p>재료 골드 가치</p>
-              <p>{shardOfHonor.value*60+topQualityOreha.value*500+StoneOfHonor.value*300}</p>
+              <p>{items[0].value*60+items[1].value*500+items[2].value*300}</p>
             </div>
             <div>
               <p>이득률</p>
-              <p>{(gold && shardOfHonor.value && topQualityOreha.value && StoneOfHonor.value)?
-              ((((shardOfHonor.value*60+topQualityOreha.value*500+StoneOfHonor.value*300)*(gold/100))/(22000*((100-cash)/100))*100)-100).toFixed(2)+'%'
+              <p>{(gold && items[0].value && items[1].value && items[2].value)?
+              ((((items[0].value*60+items[1].value*500+items[2].value*300)*(gold/100))/(22000*((100-cash)/100))*100)-100).toFixed(2)+'%'
             :0}</p>
             </div>
           </div>
@@ -352,12 +168,12 @@ function App() {
             <p className='text'>{33000*((100-cash)/100)}</p>
             <div>
               <p>재료 골드 가치</p>
-              <p>{protection.value*100+blessing.value*300+grace.value*500}</p>
+              <p>{items[5].value*100+items[4].value*300+items[3].value*500}</p>
             </div>
             <div>
               <p>이득률</p>
-              <p>{(gold && protection.value&blessing.value&grace.value)?
-              ((((protection.value*100+blessing.value*300+grace.value*500)*(gold/100))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%':0}</p>
+              <p>{(gold && items[5].value&items[4].value&items[3].value)?
+              ((((items[5].value*100+items[4].value*300+items[3].value*500)*(gold/100))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%':0}</p>
             </div>
           </div>
           <div className='result_item'>
@@ -367,23 +183,19 @@ function App() {
             <p className='text'>{33000*((100-cash)/100)}</p>
             <div>
               <p>재료 골드 가치</p>
-              <p>{shardOfHonor.value*200+topQualityOreha.value*250+StoneOfHonor.value*600}</p>
+              <p>{items[0].value*200+items[1].value*250+items[2].value*600}</p>
             </div>
             <div>
               <p>이득률</p>
-              <p>{(gold && shardOfHonor.value && topQualityOreha.value && StoneOfHonor.value)?
-              ((((shardOfHonor.value*200+topQualityOreha.value*250+StoneOfHonor.value*600)*(gold/100))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%'
+              <p>{(gold && items[0].value && items[1].value && items[2].value)?
+              ((((items[0].value*200+items[1].value*250+items[2].value*600)*(gold/100))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%'
               :0}</p>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
-
-
-
-
+export default App;
