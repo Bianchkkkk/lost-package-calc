@@ -192,7 +192,7 @@ function App() {
             <div>
               <p>이득률</p>
               <p>{(gold && items[0].value && items[1].value && items[2].value)
-                &&(isFinite(((((items[0].value*60+items[1].value*500+items[2].value*300)*(gold))/(22000*((100-cash)/100))*100)-100).toFixed(2)))
+                &&(isFinite(((((items[0].value*60+items[1].value*500+items[2].value*300)*(gold))/(22000*((100-cash)/100))*100)-100)))
                 ?((((items[0].value*60+items[1].value*500+items[2].value*300)*(gold))/(22000*((100-cash)/100))*100)-100).toFixed(2)+'%'
                 :0}
               </p>
@@ -209,7 +209,7 @@ function App() {
             </div>
             <div>
               <p>이득률</p>
-              <p>{(gold && items[5].value&items[4].value&items[3].value)
+              <p>{(gold && items[5].value && items[4].value && items[3].value)
                 &&(isFinite(((((items[5].value*100+items[4].value*300+items[3].value*500)*(gold))/(33000*((100-cash)/100))*100)-100)))
                 ?
                 ((((items[5].value*100+items[4].value*300+items[3].value*500)*(gold))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%'
