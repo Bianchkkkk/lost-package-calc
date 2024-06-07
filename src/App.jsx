@@ -15,7 +15,10 @@ function App() {
     { id: 66111121, name: 'grace', korName: '은총', value: 0 },
     { id: 66111122, name: 'blessing', korName: '축복', value: 0 },
     { id: 66111123, name: 'protection', korName: '가호', value: 0 },
+    { id: 66102105, name: 'refinedGuardianStone', korName: '정수강(10개)', value: 0 },
+    { id: 66102005, name: 'refinedDestructionStone', korName: '정파강(10개)', value: 0 },
   ]);
+  const [silling, setSilling] = useState(0);
   const [api_key, setApi_key] = useState(localStorage.getItem('api_key'));
   const pathName = window.location.pathname;
 
@@ -104,6 +107,7 @@ function App() {
       <div>
         <h1>로아 패키지 계산기</h1>
         <p>골드 시세는 필수로 입력해야합니다</p>
+        <p>효율 계산에 실링은 포함되지 않습니다.</p>
         <div className='api_input_box'>
           <input
             type='text'
@@ -115,7 +119,7 @@ function App() {
         </div>
         <div className='cash_box'>
           <div className='cash_item'>
-            <img src="/lost-package-calc/coupon.png" alt="coupon" />
+            <img className='cash_img' src="/lost-package-calc/coupon.png" alt="coupon" />
             <p className='title'>상품권 할인율 (%)</p>
             <div>
               <input type="number" onChange={
@@ -141,9 +145,9 @@ function App() {
               setSelectedGold(0);
             }
           }            
-          style={selectedGold === 0 ? {boxShadow: '0 0 0 3px #1f65b4', transition: '0.5s ease' } : {}}
+          style={selectedGold === 0 ? {backgroundColor: '#1e2530', boxShadow: '0 0 0 3px #1f65b4', transition: '0.5s ease' } : {}}
           >
-            <img src="/lost-package-calc/gold.png" alt="gold" />
+            <img className='cash_img' src="/lost-package-calc/gold.png" alt="gold" />
             <p className='title'>양지 골드 시세</p>
             <div className='gold_box'>
               <p>2750 : </p>
@@ -163,8 +167,9 @@ function App() {
               setSelectedGold(1);
             }
           }                      
-          style={selectedGold === 1 ? {boxShadow: '0 0 0 3px #1f65b4', transition: '0.5s ease' } : {}}
-          >            <img src="/lost-package-calc/gold.png" alt="gold" />
+          style={selectedGold === 1 ? {backgroundColor: '#1e2530', boxShadow: '0 0 0 3px #1f65b4', transition: '0.5s ease' } : {}}
+          >            
+          <img className='cash_img' src="/lost-package-calc/gold.png" alt="gold" />
             <p className='title'>음지 골드 시세</p>
             <div className='gold_box'>
               <p>100 : </p>
@@ -186,6 +191,19 @@ function App() {
               } />
             </div>
           </div> 
+          <div className='cash_item' onClick={
+            () => {
+              setSilling(silling === 0 ? 1 : 0);
+            }
+          }
+          style={silling === 1 ? {backgroundColor: '#1e2530', boxShadow: '0 0 0 3px #1f65b4', transition: '0.5s ease' } : {backgroundColor: '#301e1e',boxShadow: '0 0 0 3px #bb4325', transition: '0.5s ease' }}
+          >            
+          <img className='cash_img' src="/lost-package-calc/silling.png" alt="gold" />
+            <p className='title'>실링 포함 여부</p>
+            <div className='gold_box'>
+              <p>100만 실링 : 1만 골드</p>
+            </div>
+          </div> 
         </div>
         <div className='item_box'>
           {items.map(item => (
@@ -200,25 +218,25 @@ function App() {
         </div>
         <div className='result_box'>
           <div className='result_item'>
-            <img src="/lost-package-calc/week.png" alt="week" />
+            <img className='package_img' src="/lost-package-calc/week.png" alt="week" />
             <p className='title'>주간성장패키지</p>
             <p className='title'>현금가</p>
             <p className='text'>{22000*((100-cash)/100)}</p>
             <div>
               <p>재료 골드 가치</p>
-              <p>{items[0].value*60+items[1].value*500+items[2].value*300}</p>
+              <p>{items[0].value*60+items[1].value*500+items[2].value*300+(silling?12000:0)}</p>
             </div>
             <div>
               <p>이득률</p>
               <p>{(gold && items[0].value && items[1].value && items[2].value)
-                &&(isFinite(((((items[0].value*60+items[1].value*500+items[2].value*300)*(gold))/(22000*((100-cash)/100))*100)-100)))
-                ?((((items[0].value*60+items[1].value*500+items[2].value*300)*(gold))/(22000*((100-cash)/100))*100)-100).toFixed(2)+'%'
+                &&(isFinite(((((items[0].value*60+items[1].value*500+items[2].value*300+(silling?12000:0))*(gold))/(22000*((100-cash)/100))*100)-100)))
+                ?((((items[0].value*60+items[1].value*500+items[2].value*300+(silling?12000:0))*(gold))/(22000*((100-cash)/100))*100)-100).toFixed(2)+'%'
                 :0}
               </p>
             </div>
           </div>
           <div className='result_item'>
-            <img src="/lost-package-calc/sub.png" alt="sub" />
+            <img className='package_img' src="/lost-package-calc/sub.png" alt="sub" />
             <p className='title'>주간보조패키지</p>
             <p className='title'>현금가</p>
             <p className='text'>{33000*((100-cash)/100)}</p>
@@ -237,7 +255,7 @@ function App() {
             </div>
           </div>
           <div className='result_item'>
-            <img src="/lost-package-calc/pcRoom.png" alt="pcRoom" />
+            <img className='package_img' src="/lost-package-calc/pcRoom.png" alt="pcRoom" />
             <p className='title'>PC방 패키지</p>
             <p className='title'>현금가</p>
             <p className='text'>{33000*((100-cash)/100)}</p>
@@ -251,6 +269,25 @@ function App() {
                 &&(isFinite(((((items[0].value*200+items[1].value*250+items[2].value*600)*(gold))/(33000*((100-cash)/100))*100)-100)))
                 ?
                 ((((items[0].value*200+items[1].value*250+items[2].value*600)*(gold))/(33000*((100-cash)/100))*100)-100).toFixed(2)+'%'
+                :0}
+              </p>
+            </div>
+          </div>
+          <div className='result_item'>
+            <img className='package_img' src="/lost-package-calc/allInOne.png" alt="allInOne" />
+            <p className='title'>올인원 최상급 성장 패키지</p>
+            <p className='title'>현금가</p>
+            <p className='text'>{55000*((100-cash)/100)}</p>
+            <div>
+              <p>재료 골드 가치</p>
+              <p>{items[6].value*300+items[7].value*200+items[2].value*160+items[1].value*250+items[0].value*70+items[3].value*130+items[4].value*40+items[5].value*15+(silling?30000:0)}</p>
+            </div>
+            <div>
+              <p>이득률</p>
+              <p>{(gold && items[0].value && items[1].value && items[2].value && items[3].value && items[4].value && items[5].value && items[6].value && items[7].value+(silling?30000:0))
+                &&(isFinite(((((items[6].value*300+items[7].value*200+items[2].value*160+items[1].value*250+items[0].value*70+items[3].value*130+items[4].value*40+items[5].value*15+(silling?30000:0))*(gold))/(55000*((100-cash)/100))*100)-100)))
+                ?
+                ((((items[6].value*300+items[7].value*200+items[2].value*160+items[1].value*250+items[0].value*70+items[3].value*130+items[4].value*40+items[5].value*15+(silling?30000:0))*(gold))/(55000*((100-cash)/100))*100)-100).toFixed(2)+'%'
                 :0}
               </p>
             </div>
