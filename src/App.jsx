@@ -51,35 +51,54 @@ function App() {
     updateItemValue(item, value);
   }
 
-
   function fetchItemValue(item) {
-    fetch(`https://developer-lostark.game.onstove.com/markets/items/${item.id}`, {
+    return fetch(`https://developer-lostark.game.onstove.com/markets/items/${item.id}`, {
       headers: {
         Accept: 'application/json',
         Authorization: `bearer ${api_key}`,
       },
     })
-      .then(res => res.json())
-      .then(data => {
-        updateItemValue(item, parseInt(data[0].Stats[0].AvgPrice));
-      });
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return res.json();
+    })
+    .then(data => {
+      return parseInt(data[0].Stats[0].AvgPrice);
+    })
+    .catch(error => {
+      console.error('Error fetching item value:', error);
+      localStorage.removeItem('api_key');
+      throw new Error('API 키가 잘못되었습니다. https://developer-lostark.game.onstove.com/ 에서 api 키를 복사해주세요.');
+    });
   }
-
+  
   function loadItemsValue() {
-    items.forEach(item => fetchItemValue(item));
+    Promise.all(items.map(item => fetchItemValue(item)))
+    .then(itemValues => {
+      itemValues.forEach((value, index) => {
+        updateItemValue(items[index], value);
+      });
+    })
+    .catch(error => {
+      alert(error.message);
+    });
   }
-
+  
   function handleApiKeyUpdate() {
     const apiKeyInput = document.querySelector('input');
     if (!apiKeyInput.value) {
-      alert('api 키를 입력해주세요');
-      return;
-    }
-    localStorage.setItem('api_key', apiKeyInput.value);
-    setApi_key(apiKeyInput.value);
-    loadItemsValue();
-  }
+      localStorage.removeItem('api_key');
+      alert('API 키를 입력해주세요. https://developer-lostark.game.onstove.com/ 에서 api 키를 복사해주세요.');
 
+      return;
+    } else {
+      localStorage.setItem('api_key', apiKeyInput.value);
+      setApi_key(apiKeyInput.value);
+      loadItemsValue();
+    }
+  }
   return (
     <>
       <div>
