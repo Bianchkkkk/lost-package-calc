@@ -70,7 +70,7 @@ function App() {
     .catch(error => {
       console.error('Error fetching item value:', error);
       localStorage.removeItem('api_key');
-      throw new Error('API 키가 잘못되었습니다. https://developer-lostark.game.onstove.com/ 에서 api 키를 복사해주세요.');
+      throw new Error('API 키가 잘못되었습니다. \nhttps://developer-lostark.game.onstove.com/ 에서 api 키를 복사해주세요.');
     });
   }
   
@@ -90,7 +90,7 @@ function App() {
     const apiKeyInput = document.querySelector('input');
     if (!apiKeyInput.value) {
       localStorage.removeItem('api_key');
-      alert('API 키를 입력해주세요. https://developer-lostark.game.onstove.com/ 에서 api 키를 복사해주세요.');
+      alert('API 키를 입력해주세요. \nhttps://developer-lostark.game.onstove.com/ 에서 api 키를 복사해주세요.');
 
       return;
     } else {
