@@ -107,7 +107,6 @@ function App() {
       <div>
         <h1>로아 패키지 계산기</h1>
         <p>골드 시세는 필수로 입력해야합니다</p>
-        <p>효율 계산에 실링은 포함되지 않습니다.</p>
         <div className='api_input_box'>
           <input
             type='text'
