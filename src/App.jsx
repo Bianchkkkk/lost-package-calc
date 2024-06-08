@@ -149,7 +149,7 @@ function App() {
             <img className='cash_img' src="/lost-package-calc/gold.png" alt="gold" />
             <p className='title'>양지 골드 시세</p>
             <div className='gold_box'>
-              <p>2750 : </p>
+              <p>{2750*((100-cash)/100)} : </p>
               <input type="number" onChange={
                 (e) => {
                   if (e.target.value < 0) {
